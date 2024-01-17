@@ -34,8 +34,8 @@
     "prettier": "prettier --config .prettierrc --write .",
     "test:watch": "jest --watch"
   },
-
   "dependencies": {
+    "axios": "^1.6.5",
     "tslib": "~2.6"
   },
   "volta": {
