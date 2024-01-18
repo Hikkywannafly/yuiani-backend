@@ -25,7 +25,7 @@ abstract class BaseProvider {
 
 
     protected readonly logo: string;
-    
+
 
     protected readonly isNSFW: boolean = false;
 
