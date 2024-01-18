@@ -1,40 +1,53 @@
+export interface IBaseProvider {
+    name: string;
+    baseUrl: string;
+    locales: string[];
+    logo: string;
+    isNSFW: boolean;
+    isWorking: boolean;
+}
 
-export abstract class BaseProvider {
+abstract class BaseProvider {
     /**
     * Name of the provider
     */
-    name: string;
+    readonly name: string;
 
     /**
     * Base url of the provider
     */
-    baseUrl: string;
+    protected readonly baseUrl: string;
     /**
      * The lauguages the provider supports 
      *  must be in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format
      */
-    locales: string[];
+    protected readonly locales: string[];
 
 
-    logo: string;
+    protected readonly logo: string;
+    
 
-    readonly isNSFW: boolean = false;
+    protected readonly isNSFW: boolean = false;
 
     /**
      * Override source is working or not
      */
-    readonly isWorking: boolean = true;
+    protected readonly isWorking: boolean = true;
 
 
-    get toString(): any {
+    get toString(): IBaseProvider {
 
         return {
             name: this.name,
             baseUrl: this.baseUrl,
             locales: this.locales,
-            isWorking: this.isWorking
+            isWorking: this.isWorking,
+            isNSFW: this.isNSFW,
+            logo: this.logo
         }
 
     }
 
 }
+
+export default BaseProvider;
