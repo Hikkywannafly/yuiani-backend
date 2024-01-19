@@ -42,3 +42,37 @@ export enum MediaStatus {
     NOT_YET_AIRED = 'Not yet aired',
     UNKNOWN = 'Unknown',
 }
+export interface IEpisode {
+    number: string;
+    id: string;
+    title?: string;
+    isFiller?: boolean;
+    description?: string;
+    thumbnail?: string;
+    section?: string;
+    extra?: Record<string, string>;
+}
+
+export interface IEpisodeServer {
+    name: string,
+    url: string,
+    extraData?: Record<string, string>
+}
+
+export interface IVideo {
+    headers?: { [k: string]: string };
+    intro?: Intro;
+    outro?: Intro;
+    subtitles?: ISubtitle[];
+    sources: IVideo[];
+    download?: string;
+    embedURL?: string;
+}
+
+export interface Intro {
+
+}
+
+export interface ISubtitle {
+
+}

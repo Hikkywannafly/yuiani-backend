@@ -1,5 +1,6 @@
-import { ISource } from './video-types';
+import { ISource, IEpisodeServer } from './video-types';
 
 export {
     ISource,
+    IEpisodeServer
 }

@@ -1,5 +1,5 @@
 import { BaseModule } from ".";
-import { ISource } from "../types"
+import { ISource, IEpisodeServer } from "../types"
 
 abstract class Anime extends BaseModule {
 
@@ -14,7 +14,7 @@ abstract class Anime extends BaseModule {
   /**
       * 
       */
-  abstract getEpisodesServer(animeId: string, ...args: any[]): Promise<unknown>;
+  abstract getEpisodesServer(animeId: string, ...args: any[]): Promise<IEpisodeServer>;
   /**
       * 
       */
