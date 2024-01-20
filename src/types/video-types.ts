@@ -64,15 +64,56 @@ export interface IVideo {
     intro?: Intro;
     outro?: Intro;
     subtitles?: ISubtitle[];
-    sources: IVideo[];
+    sources: IVideoContainer[];
     download?: string;
     embedURL?: string;
 }
 
+/**
+ * The start, and the end of the intro or opening in seconds.
+ */
 export interface Intro {
+    start: number;
+    end: number;
+}
+
+
+export interface ISubtitle {
+    /**
+     * The id of the subtitle. **not** required
+     */
+    id?: string;
+    /**
+     * The **url** that should take you to the subtitle **directly**.
+     */
+    url: string;
+    /**
+     * The language of the subtitle
+     */
+    lang: string;
 
 }
 
-export interface ISubtitle {
-
+export interface IVideoContainer {
+    /**
+     * The **MAIN URL** of the video provider that should take you to the video
+     */
+    url: string;
+    /**
+     * The Quality of the video should include the `p` suffix
+     */
+    quality?: string;
+    /**
+     * make sure to set this to `true` if the video is hls
+     */
+    isM3U8?: boolean;
+    /**
+     * set this to `true` if the video is dash (mpd)
+     */
+    isDASH?: boolean;
+    /**
+     * size of the video in **bytes**
+     */
+    size?: number;
+    [x: string]: unknown; // other fields
 }
