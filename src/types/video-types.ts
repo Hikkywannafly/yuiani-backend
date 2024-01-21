@@ -15,6 +15,7 @@ export enum MediaFormat {
 export interface ISource {
     id: string;
     title: string | ITitle;
+    description?: string;
     url?: string;
     image?: string;
     imageHash?: string;
