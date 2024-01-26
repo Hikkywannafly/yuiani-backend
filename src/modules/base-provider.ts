@@ -7,6 +7,7 @@ export interface IBaseProvider {
     isWorking: boolean;
 }
 
+
 abstract class BaseProvider {
     /**
     * Name of the provider

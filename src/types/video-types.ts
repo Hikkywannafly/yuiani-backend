@@ -11,6 +11,18 @@ export enum MediaFormat {
     ONE_SHOT = 'ONE_SHOT',
 }
 
+export type GetIdParams = {
+    media: {
+        id: number;
+        title: {
+            romaji: string;
+            english: string;
+            userPreferred: string;
+            native: string;
+        };
+    };
+};
+
 
 export interface ISource {
     id: string;

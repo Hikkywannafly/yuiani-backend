@@ -9,6 +9,7 @@ abstract class BaseModule extends BaseProvider {
     abstract search(query: any, ...args: any[]): Promise<unknown>;
 
 
+
 }
 
 export default BaseModule;
