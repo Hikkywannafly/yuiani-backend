@@ -56,9 +56,9 @@ export enum MediaStatus {
     UNKNOWN = 'Unknown',
 }
 export interface IEpisode {
-    number: string;
     id: string;
     title?: string;
+    number?: string;
     isFiller?: boolean;
     description?: string;
     thumbnail?: string;
@@ -72,6 +72,13 @@ export interface IEpisodeServer {
     id?: string
     extraData?: Record<string, string>
 }
+
+export interface IVideoServer {
+    name: string;
+    embed: string;
+    extraData?: Record<string, string>;
+};
+
 
 export interface IVideo {
     headers?: { [k: string]: string };

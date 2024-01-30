@@ -1,5 +1,5 @@
 import { Anime } from "../../modules";
-import { ISource, IEpisodeServer, IEpisode, IVideo } from "../../types";
+import { ISource, IVideoServer, IEpisode, IVideo } from "../../types";
 import { getAnilistMedia } from "../../utils/anilist";
 import fetch from "node-fetch";
 import { load } from 'cheerio';
@@ -43,9 +43,7 @@ class AnimeVSub extends Anime {
                 id: animeId,
                 title: title,
             }
-
             return source;
-
         } catch (error) {
             console.log(error);
         }
@@ -56,9 +54,7 @@ class AnimeVSub extends Anime {
      * 
      *
     **/
-
-    override async getEpisodesServer(animeId: string): Promise<IEpisodeServer[]> {
-
+    override async getEpisodes(animeId: string): Promise<IEpisode[]> {
         try {
             const res = await fetch(
                 `${this.baseUrl}/phim/a-a${animeId}/xem-phim.html`
@@ -66,16 +62,15 @@ class AnimeVSub extends Anime {
 
             const $ = load(await res.text());
 
-            const episodes: IEpisodeServer[] = $(".episode a")
+            const episodes: IEpisode[] = $(".episode a")
                 .toArray()
                 .map((episodeEl) => {
                     const $el = $(episodeEl);
-                    const name = $el.attr("title");
-                    const number = parseNumberFromString(name, "Full").toString();
+                    const title = $el.attr("title");
+                    const number = parseNumberFromString(title, "Full").toString();
                     const id = $el.data("id").toString();
-                    if (!name || !id) return null;
-
-                    return { title: id, name, number };
+                    if (!title || !id) return null;
+                    return { id, title, number };
                 })
                 .filter((a) => a);
 
@@ -84,14 +79,13 @@ class AnimeVSub extends Anime {
         } catch (error) {
             console.log(error);
         }
-
         throw new Error("Method not implemented.");
-
     }
 
-    override async getEpisodeInfo(episodeId: string): Promise<IEpisode> {
+
+    override async getVideoServer(episodeId: string): Promise<IVideoServer[]> {
         try {
-            const res = await fetch(
+            const response = await fetch(
                 `${this.baseUrl}/ajax/player?v=2019a`,
                 {
                     body: `episodeId=${episodeId}&backup=1`,
@@ -102,8 +96,24 @@ class AnimeVSub extends Anime {
                     },
                 }
             );
-            const data = await res.json();
-            console.log(data);
+            const data = await response.json();
+
+            const $ = load(data?.html);
+
+            const servers: IVideoServer[] = $("a")
+                .toArray()
+                .filter((el) => $(el).data("play") === "api")
+                .map((el) => {
+                    const $el = $(el);
+
+                    const id = $el.data("id") as string;
+                    const hash = $el.data("href") as string;
+                    const name = $el.text().trim();
+
+                    return { name, extraData: { id, hash }, embed: "" };
+                });
+
+            return servers;
         }
         catch (error) {
             console.log(error);
@@ -112,6 +122,13 @@ class AnimeVSub extends Anime {
     }
 
     override getVideoSources(): Promise<IVideo> {
+        try {
+
+        }
+        catch (error) {
+            console.log(error);
+
+        }
         throw new Error("Method not implemented.");
     }
 
