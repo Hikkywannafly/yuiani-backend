@@ -68,7 +68,8 @@ export interface IEpisode {
 
 export interface IEpisodeServer {
     name: string,
-    url: string,
+    url?: string,
+    id?: string
     extraData?: Record<string, string>
 }
 

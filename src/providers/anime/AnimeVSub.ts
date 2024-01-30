@@ -3,6 +3,7 @@ import { ISource, IEpisodeServer, IEpisode, IVideo } from "../../types";
 import { getAnilistMedia } from "../../utils/anilist";
 import fetch from "node-fetch";
 import { load } from 'cheerio';
+import { parseNumberFromString } from '../../utils';
 
 class AnimeVSub extends Anime {
 
@@ -56,7 +57,36 @@ class AnimeVSub extends Anime {
         }
     }
 
-    override getEpisodesServer(): Promise<IEpisodeServer[]> {
+    override async getEpisodesServer(animeId: string): Promise<IEpisodeServer[]> {
+
+        try {
+
+            const res = await fetch(
+                `${this.baseUrl}/phim/a-a${animeId}/xem-phim.html`
+            );
+
+            const $ = load(await res.text());
+
+            const episodes: IEpisodeServer[] = $(".episode a")
+                .toArray()
+                .map((episodeEl) => {
+                    const $el = $(episodeEl);
+                    const name = $el.attr("title");
+                    const number = parseNumberFromString(name, "Full").toString();
+                    const id = $el.data("id").toString();
+
+                    if (!name || !id) return;
+
+                    return { title: id, name, number };
+                })
+                .filter((a) => a);
+
+            return episodes;
+
+
+        } catch (error) {
+            console.log(error);
+        }
 
         throw new Error("Method not implemented.");
 
