@@ -15,4 +15,9 @@ export default {
     '!src/**/*.d.ts',
     '!src/**/*.d.mts',
   ],
+  transform: {
+    '^.+\\.ts?$': 'ts-jest',
+    "^.+\\.jsx?$": "babel-jest"
+  },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };

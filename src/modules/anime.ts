@@ -8,7 +8,7 @@ abstract class Anime extends BaseModule {
     */
   protected readonly isDubAvailableSeparately: boolean = false;
 
-  abstract getID(animeId: string | number): Promise<string | number>;
+  abstract getID(animeId: string | number): Promise<any>;
   /**
       *  Anime information from the provider (source) provice the information of the anime
       */
