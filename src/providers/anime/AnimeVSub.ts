@@ -48,7 +48,7 @@ class AnimeVSub extends Anime {
             console.log(error);
         }
     }
-    /**
+    /** 
      * 
      * 
      * 
@@ -81,8 +81,12 @@ class AnimeVSub extends Anime {
         }
         throw new Error("Method not implemented.");
     }
-
-
+    /** 
+      * 
+      * 
+      * 
+      *
+     **/
     override async getVideoServer(episodeId: string): Promise<IVideoServer[]> {
         try {
             const response = await fetch(
@@ -120,14 +124,44 @@ class AnimeVSub extends Anime {
         }
         throw new Error("Method not implemented.");
     }
-
-    override getVideoSources(): Promise<IVideo> {
+    /** 
+      * 
+      * 
+      * 
+      *
+     **/
+    override async getVideoSources(_: IVideoServer, extraData?: Record<string, string>): Promise<IVideo> {
         try {
+            const { id, hash } = extraData;
 
+            const response = await fetch(
+                `${this.baseUrl}/ajax/player?v=2019a`,
+                {
+                    body: `link=${hash}&id=${id}`,
+                    redirect: "manual",
+                    method: "post",
+                    headers: {
+                        "content-type": "application/x-www-form-urlencoded",
+                    },
+                }
+            );
+            const data = await response.json();
+
+            const VideoSources: { file: string; label?: string; type: string }[] = data.link;
+
+            return {
+                sources: VideoSources.map((source) => ({
+                    url: !source.file.includes("https")
+                        ? `https:${source.file}`
+                        : source.file,
+                    quality: source.label,
+                    isM3U8: true,
+                    type: source.type,
+                })),
+            };
         }
         catch (error) {
             console.log(error);
-
         }
         throw new Error("Method not implemented.");
     }

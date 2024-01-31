@@ -25,7 +25,7 @@ abstract class Anime extends BaseModule {
   /**
       * 
       */
-  abstract getVideoSources(animeId: string, ...args: any[]): Promise<IVideo>;
+  abstract getVideoSources(_: IVideoServer, extraData?: Record<string, string>): Promise<IVideo>;
 
 }
 
