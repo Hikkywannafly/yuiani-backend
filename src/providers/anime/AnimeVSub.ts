@@ -6,7 +6,6 @@ import { load } from 'cheerio';
 import { parseNumberFromString } from '../../utils';
 
 class AnimeVSub extends Anime {
-
     override readonly name = " animeVSub";
     protected override baseUrl = 'https://animevietsub.io';
     protected override logo = 'https://cdn.animevietsub.io/data/logo/logoz.png';

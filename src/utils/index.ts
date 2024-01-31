@@ -1,6 +1,9 @@
-import { parseNumberFromString } from "./parser"
+import { parseNumberFromString } from "./parser";
+import { handlePath, hasPath } from "./build-utils";
 
 
 export {
-    parseNumberFromString
+    parseNumberFromString,
+    handlePath,
+    hasPath
 }
