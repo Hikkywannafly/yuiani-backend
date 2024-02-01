@@ -44,6 +44,7 @@
     "axios": "^1.6.5",
     "cheerio": "^1.0.0-rc.12",
     "node-fetch": "2",
+    "path": "^0.12.7",
     "tslib": "~2.6"
   },
   "volta": {

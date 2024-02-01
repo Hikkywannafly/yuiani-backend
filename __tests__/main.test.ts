@@ -3,6 +3,6 @@
 // import fetch from "node-fetch";
 import { getProviderType } from "../src/scripts/base-build";
 test("parse", async () => {
-    const data = getProviderType();
+    const data = await getProviderType();
     console.log(data);
 });
