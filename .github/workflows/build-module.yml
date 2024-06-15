@@ -1,8 +1,0 @@
-name: yuiani-builders
-on:
-  push:
-    branches: [main]
-
-jobs:
-  upload:
-    runs-on: ubuntu-latest

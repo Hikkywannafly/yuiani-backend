@@ -1,54 +1,69 @@
 {
-  "name": "yuix-lib",
-  "version": "0.0.0",
-  "description": "A lib provice anime hls source.",
-  "type": "module",
-  "author": "Hikkywannafly",
+  "name": "backend",
+  "version": "1.3.1",
+  "private": true,
+  "homepage": "https://github.com/movie-web/backend",
   "engines": {
-    "node": "16>= 20.9 < 21"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.23.9",
-    "@babel/preset-env": "^7.23.9",
-    "@types/jest": "~29.5",
-    "@types/jsdom": "^21.1.6",
-    "@types/node": "~20",
-    "@types/node-fetch": "^2.6.11",
-    "@typescript-eslint/eslint-plugin": "~6.15",
-    "@typescript-eslint/parser": "~6.15",
-    "babel-jest": "^29.7.0",
-    "eslint": "~8.56",
-    "eslint-config-prettier": "~9.1",
-    "eslint-plugin-jest": "~27.6",
-    "jest": "~29.7",
-    "prettier": "~3.1",
-    "rimraf": "~5.0",
-    "ts-api-utils": "~1.0",
-    "ts-jest": "~29.1",
-    "typescript": "~5.3"
+    "node": ">=18"
   },
   "scripts": {
-    "start": "node build/src/main.js",
-    "clean": "rimraf coverage build tmp",
-    "prebuild": "npm run lint",
-    "build": "tsc -p tsconfig.json",
-    "build:watch": "tsc -w -p tsconfig.json",
-    "build:release": "npm run clean && tsc -p tsconfig.release.json",
-    "lint": "eslint . --ext .ts --ext .mts",
-    "test": "jest --coverage",
-    "test-moulde": "jest __tests__/main.test.ts",
-    "prettier": "prettier --config .prettierrc --write .",
-    "test:watch": "jest --watch"
+    "dev": "nodemon -r tsconfig-paths/register src/main.ts",
+    "build": "pnpm run build:pre && pnpm run build:compile",
+    "start": "node dist/main.js",
+    "lint": "eslint --ext .ts,.js,.json,.tsx src/",
+    "lint:fix": "eslint --fix --ext .ts,.js,.json,.tsx src/",
+    "build:pre": "rimraf dist/",
+    "build:compile": "tsc && tsc-alias",
+    "preinstall": "npx -y only-allow pnpm",
+    "migration:create": "pnpm exec mikro-orm migration:create",
+    "migration:up": "pnpm exec mikro-orm migration:up",
+    "migration:down": "pnpm exec mikro-orm migration:down"
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/mikro-orm.config.ts"
+    ]
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^5.9.2",
+    "@mikro-orm/migrations": "^5.9.2",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/node": "^20.5.3",
+    "@types/node-forge": "^1.3.8",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.2",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.7",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "axios": "^1.6.5",
-    "cheerio": "^1.0.0-rc.12",
-    "node-fetch": "2",
-    "path": "^0.12.7",
-    "prompts": "^2.4.2",
-    "tslib": "~2.6"
-  },
-  "volta": {
-    "node": "20.10.0"
+    "@fastify/cors": "^8.3.0",
+    "@mikro-orm/core": "^5.9.2",
+    "@mikro-orm/postgresql": "^5.9.2",
+    "@types/ms": "^0.7.33",
+    "async-ratelimiter": "^1.3.12",
+    "cron": "^3.1.5",
+    "fastify": "^4.21.0",
+    "fastify-metrics": "^10.3.3",
+    "fastify-type-provider-zod": "^1.1.9",
+    "ioredis": "^5.3.2",
+    "jsonwebtoken": "^9.0.2",
+    "ms": "^2.1.3",
+    "nanoid": "^3.3.6",
+    "neat-config": "^2.0.0",
+    "node-forge": "^1.3.1",
+    "prom-client": "^15.0.0",
+    "type-fest": "^4.2.0",
+    "winston": "^3.10.0",
+    "winston-console-format": "^1.0.8",
+    "zod": "^3.22.2"
   }
 }
