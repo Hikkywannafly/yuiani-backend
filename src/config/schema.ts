@@ -35,35 +35,56 @@ export const configSchema = z.object({
       debug: booleanSchema.default(false),
     })
     .default({}),
+  // Thay đổi từ
   postgres: z.object({
-    // connection URL for postgres database
-    connection: z.string(),
+  // connection URL for postgres database
+  connection: z.string(),
 
-    // run all migrations on boot of the application
-    migrateOnBoot: booleanSchema.default(false),
+  // run all migrations on boot of the application
+  migrateOnBoot: booleanSchema.default(false),
 
-    // try to sync the schema on boot, useful for development
-    // will always keep the database schema in sync with the connected database
-    // it is extremely destructive, do not use it EVER in production
-    syncSchema: booleanSchema.default(false),
+  // try to sync the schema on boot, useful for development
+  // will always keep the database schema in sync with the connected database
+  // it is extremely destructive, do not use it EVER in production
+  syncSchema: booleanSchema.default(false),
 
-    // Enable debug logging for MikroORM - Outputs queries and entity management logs
-    // Do NOT use in production, leaks all sensitive data
-    debugLogging: booleanSchema.default(false),
+  // Enable debug logging for MikroORM - Outputs queries and entity management logs
+  // Do NOT use in production, leaks all sensitive data
+  debugLogging: booleanSchema.default(false),
 
-    // Enable SSL for the postgres connection
-    ssl: booleanSchema.default(false),
+  // Enable SSL for the postgres connection
+  ssl: booleanSchema.default(false),
   }),
+  // Thành
+  postgres: z.object({
+  // connection URL for postgres database
+  connection: z.string().default(process.env.DATABASE_URL || ''),
+
+  // run all migrations on boot of the application
+  migrateOnBoot: booleanSchema.default(false),
+
+  // try to sync the schema on boot, useful for development
+  // will always keep the database schema in sync with the connected database
+  // it is extremely destructive, do not use it EVER in production
+  syncSchema: booleanSchema.default(false),
+
+  // Enable debug logging for MikroORM - Outputs queries and entity management logs
+  // Do NOT use in production, leaks all sensitive data
+  debugLogging: booleanSchema.default(false),
+
+  // Enable SSL for the postgres connection
+  ssl: booleanSchema.default(false),
+  }).default({}),
+  // Tương tự cho crypto và meta
   crypto: z.object({
-    // session secret. used for signing session tokens
-    sessionSecret: z.string().min(32),
-  }),
+  // session secret. used for signing session tokens
+  sessionSecret: z.string().min(32).default('your_default_secret_key_at_least_32_chars_long'),
+  }).default({}),
   meta: z.object({
-    // name and description of this backend
-    // this is displayed to the client when making an account
-    name: z.string().min(1),
-    description: z.string().min(1).optional(),
-  }),
+  // name and description of this backend
+  name: z.string().min(1).default('Yuiani Backend'),
+  description: z.string().min(1).optional().default('Backend API for Yuiani'),
+  }).default({}),
   captcha: z
     .object({
       // enabled captchas on register
