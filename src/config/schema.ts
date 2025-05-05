@@ -72,10 +72,8 @@ export const configSchema = z.object({
   // Do NOT use in production, leaks all sensitive data
   debugLogging: booleanSchema.default(false),
 
-  // Enable SSL for the postgres connection
   ssl: booleanSchema.default(false),
   }).default({}),
-  // Tương tự cho crypto và meta
   crypto: z.object({
   // session secret. used for signing session tokens
   sessionSecret: z.string().min(32).default('your_default_secret_key_at_least_32_chars_long'),
